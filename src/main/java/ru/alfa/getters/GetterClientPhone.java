@@ -4,13 +4,13 @@ import java.io.StringWriter;
 import java.io.Writer;
 import org.simpleframework.xml.Serializer;
 import org.simpleframework.xml.core.Persister;
-import ru.alfa.objects.ResultClientPhone;
+import ru.alfa.objects.resultClientPhone.ResultClientPhone;
 import ru.alfa.objects.clientPhone.ClientPhone;
 import ru.alfa.objects.clientPhone.InCommonParms;
 import ru.alfa.objects.clientPhone.InParams;
 import ru.alfa.objects.clientPhone.SoapBody;
 import ru.alfa.objects.clientPhone.WSCustomerExtendedInfoCLGet;
-import ru.alfa.requests.RequestRetrofit;
+import ru.alfa.requests.RequestRetrofitXML;
 
 public class GetterClientPhone {
 
@@ -26,7 +26,6 @@ public class GetterClientPhone {
 
     /*
     * Синхронный метод
-    * Конструктор принимающий в качестве входных параметров ПИН клиента
     * @param clientPIN - пин клиента
     * @return  - номер телефона
     * @throws - ошибка парсинга/получения ответа от сервера
@@ -48,7 +47,7 @@ public class GetterClientPhone {
             serializer.write(clientPhone, writer);
             String xml = writer.toString();
 
-            RequestRetrofit requestRetrofit = new RequestRetrofit();
+            RequestRetrofitXML requestRetrofit = new RequestRetrofitXML();
             ResultClientPhone resultClientPhone = requestRetrofit.postWSCustomerExtendedInfoCL(xml);
             if (resultClientPhone != null) {
                 return resultClientPhone.getClientList().getAdt();

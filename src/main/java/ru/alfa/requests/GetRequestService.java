@@ -5,20 +5,18 @@
  */
 package ru.alfa.requests;
 
-import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
-import retrofit2.http.Body;
-import retrofit2.http.Headers;
-import retrofit2.http.POST;
+import retrofit2.http.GET;
+import retrofit2.http.Path;
 
 /**
  *
  * @author Dmitry
  */
-public interface PostRequest {
-
-    @POST("CS/EQ/WSCustomerExtendedInfoCL/WSCustomerExtendedInfoCL12")
-    Call<ResponseBody> postClietnPhone(@Body RequestBody body);
-
+public interface GetRequestService {
+    
+    @GET("assets/{id}")
+    Call<ResponseBody> getAssetsId(@Path("Id") String assetsId);
+    
 }

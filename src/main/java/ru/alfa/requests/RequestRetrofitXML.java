@@ -20,13 +20,13 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.simplexml.SimpleXmlConverterFactory;
-import ru.alfa.objects.ResultClientPhone;
+import ru.alfa.objects.resultClientPhone.ResultClientPhone;
 
 /**
  *
  * @author Dmitry
  */
-public class RequestRetrofit {
+public class RequestRetrofitXML {
 
     public ResultClientPhone postWSCustomerExtendedInfoCL(String xml) throws IOException, Exception {
 
@@ -36,7 +36,7 @@ public class RequestRetrofit {
                 .addConverterFactory(SimpleXmlConverterFactory.create())
                 .build();
 
-        PostRequest service = retrofit.create(PostRequest.class);
+        PostRequestService service = retrofit.create(PostRequestService.class);
 
         RequestBody body = RequestBody.create(okhttp3.MediaType.parse("application/xml; charset=utf-8"), xml);
 

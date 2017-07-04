@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package ru.alfa.objects;
+package ru.alfa.objects.resultClientPhone;
 
 import org.simpleframework.xml.Attribute;
 import org.simpleframework.xml.Element;

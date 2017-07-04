@@ -1,5 +1,5 @@
 
-package ru.alfa.objects;
+package ru.alfa.objects.resultClientPhone;
 
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;

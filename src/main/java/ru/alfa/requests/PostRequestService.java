@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package ru.alfa.requests;
 
 import okhttp3.RequestBody;
@@ -16,9 +12,15 @@ import retrofit2.http.POST;
  *
  * @author Dmitry
  */
-public interface PostRequest {
+public interface PostRequestService {
 
     @POST("CS/EQ/WSCustomerExtendedInfoCL/WSCustomerExtendedInfoCL12")
     Call<ResponseBody> postClietnPhone(@Body RequestBody body);
+    
+    @POST("order")
+    Call<ResponseBody> postOrder(@Body RequestBody body);
+    
+    @POST("/order/validation")
+    Call<ResponseBody> postOrderValidation(@Body RequestBody body);
 
 }

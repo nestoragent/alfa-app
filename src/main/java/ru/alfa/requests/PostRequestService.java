@@ -20,7 +20,7 @@ public interface PostRequestService {
     @POST("order")
     Call<ResponseBody> postOrder(@Body RequestBody body);
     
-    @POST("/order/validation")
+    @POST("order/validation")
     Call<ResponseBody> postOrderValidation(@Body RequestBody body);
 
 }

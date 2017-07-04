@@ -16,19 +16,13 @@ public class GetterClientPhone {
 
     private final String clientPIN;
 
-    /*   
-    *Конструктор принимающий в качестве входных параметров ПИН клиента
-    *String clientPIN - пин клиента
+    /*
      */
     public GetterClientPhone(String clientPIN) {
         this.clientPIN = clientPIN;
     }
 
     /*
-    * Синхронный метод
-    * @param clientPIN - пин клиента
-    * @return  - номер телефона
-    * @throws - ошибка парсинга/получения ответа от сервера
      */
     public String getPhone() throws Exception {
 
@@ -39,7 +33,7 @@ public class GetterClientPhone {
             ClientPhone clientPhone = new ClientPhone();
             SoapBody soapBody = new SoapBody();
             WSCustomerExtendedInfoCLGet cLGet = new WSCustomerExtendedInfoCLGet();
-            cLGet.setInCommonParms(new InCommonParms("WSEF", 0000, "NFR", "Хорошева"));
+            cLGet.setInCommonParms(new InCommonParms("WSEF", 0000, "NFR", "asdad"));
             cLGet.setInParams(new InParams(clientPIN));
             soapBody.setcLGet(cLGet);
             clientPhone.setBody(soapBody);

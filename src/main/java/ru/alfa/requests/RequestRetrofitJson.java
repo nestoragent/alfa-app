@@ -9,8 +9,8 @@ import retrofit2.Call;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
-import ru.alfa.objects.Order;
-import ru.alfa.objects.OrderValidation;
+import ru.alfa.model.Order;
+import ru.alfa.model.OrderValidation;
 import ru.alfa.objects.ServerResponse;
 
 /**
@@ -19,24 +19,31 @@ import ru.alfa.objects.ServerResponse;
  */
 public class RequestRetrofitJson {
 
-    private final Retrofit mRetrofit;
+    private static Retrofit mRetrofit;
+    private static RequestRetrofitJson requestRetrofitJson;
 
      /*   
-      *Конструктор по умолчанию инициализирующий экземпляр Retrofit
+      *пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ Retrofit
      */
-    public RequestRetrofitJson() {
+    private RequestRetrofitJson() {
         mRetrofit = new Retrofit.Builder()
                 .baseUrl("http://alfabond2:448/v1/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
     }
 
+    public static RequestRetrofitJson getInstance() {
+        if (null == mRetrofit)
+            requestRetrofitJson = new RequestRetrofitJson();
+        return requestRetrofitJson;
+    }
+
      /*
-    * Синхронный метод
-    * Запрос конкретной бумаги по ее id
-    * @param String assetsId - id бумаги
-    * @return  - объект содержащий тело ответа и код ответа сервера
-    * @throws IOException - ошибка получения ответа от сервера
+    * пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
+    * пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅ id
+    * @param String assetsId - id пїЅпїЅпїЅпїЅпїЅпїЅ
+    * @return  - пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+    * @throws IOException - пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
      */
     public ServerResponse getAssetsIdRequest(String assetsId) throws IOException {
 
@@ -51,11 +58,11 @@ public class RequestRetrofitJson {
     
     
      /*
-    * Синхронный метод
-    * Исполнение торгового поручения
-    * @param Order order - экземпляр Order
-    * @return  - объект содержащий тело ответа и код ответа сервера
-    * @throws IOException - ошибка получения ответа от сервера
+    * пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
+    * пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+    * @param Order order - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ Order
+    * @return  - пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+    * @throws IOException - пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
      */
     public ServerResponse postOrder(Order order) throws IOException {
 
@@ -77,11 +84,11 @@ public class RequestRetrofitJson {
     
     
     /*
-    * Синхронный метод
-    * Исполнение торгового поручения
-    * @param orderValidation OrderValidation - экземпляр OrderValidation
-    * @return  - объект содержащий тело ответа и код ответа сервера
-    * @throws IOException - ошибка получения ответа от сервера
+    * пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ
+    * пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+    * @param orderValidation OrderValidation - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ OrderValidation
+    * @return  - пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+    * @throws IOException - пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
      */
     public ServerResponse postOrderValidation(OrderValidation orderValidation) throws IOException {
 

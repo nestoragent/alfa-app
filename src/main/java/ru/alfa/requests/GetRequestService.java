@@ -17,6 +17,6 @@ import retrofit2.http.Path;
 public interface GetRequestService {
     
     @GET("assets/{id}")
-    Call<ResponseBody> getAssetsId(@Path("Id") String assetsId);
+    Call<ResponseBody> getAssetsId(@Path("id") String assetsId);
     
 }

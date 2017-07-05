@@ -1,4 +1,4 @@
-package ru.alfa.objects.codeValidation;
+package ru.alfa.objects.pipe;
 
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Namespace;
@@ -11,7 +11,7 @@ import org.simpleframework.xml.Root;
  */
 @Root(name = "Envelope")
 @Namespace(reference = "http://schemas.xmlsoap.org/soap/envelope/", prefix = "S")
-public class SMSEnvelopeSuccess {
+public class PipeEnvelopeSuccess {
 
     @Path("S:Header")
     @Element(name = "WorkContext")
@@ -20,7 +20,7 @@ public class SMSEnvelopeSuccess {
 
     @Path("S:Body")
     @Element
-    private WSClickPaymentPasswordGetResponse clickPaymentPasswordGetResponse;
+    private WSCustomerOperationAuthorizationMethodsGetResponse authorizationMethodsGetResponse;
 
     public String getWorkContext() {
         return workContext;
@@ -30,11 +30,11 @@ public class SMSEnvelopeSuccess {
         this.workContext = workContext;
     }
 
-    public WSClickPaymentPasswordGetResponse getClickPaymentPasswordGetResponse() {
-        return clickPaymentPasswordGetResponse;
+    public WSCustomerOperationAuthorizationMethodsGetResponse getAuthorizationMethodsGetResponse() {
+        return authorizationMethodsGetResponse;
     }
 
-    public void setClickPaymentPasswordGetResponse(WSClickPaymentPasswordGetResponse clickPaymentPasswordGetResponse) {
-        this.clickPaymentPasswordGetResponse = clickPaymentPasswordGetResponse;
+    public void setAuthorizationMethodsGetResponse(WSCustomerOperationAuthorizationMethodsGetResponse authorizationMethodsGetResponse) {
+        this.authorizationMethodsGetResponse = authorizationMethodsGetResponse;
     }
 }

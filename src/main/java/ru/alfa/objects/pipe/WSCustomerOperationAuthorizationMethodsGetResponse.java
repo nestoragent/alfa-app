@@ -6,7 +6,6 @@ import org.simpleframework.xml.NamespaceList;
 import org.simpleframework.xml.Path;
 import org.simpleframework.xml.Root;
 import ru.alfa.objects.OutCommonParms;
-import ru.alfa.objects.OutParms;
 
 /**
  *
@@ -24,8 +23,8 @@ public class WSCustomerOperationAuthorizationMethodsGetResponse {
     private OutCommonParms outCommonParms;
 
     @Path("response")
-    @Element
-    private OutParms outParms;
+    @Element 
+    private AuthOutParms authOutParms;
 
     public OutCommonParms getOutCommonParms() {
         return outCommonParms;
@@ -35,11 +34,13 @@ public class WSCustomerOperationAuthorizationMethodsGetResponse {
         this.outCommonParms = outCommonParms;
     }
 
-    public OutParms getOutParms() {
-        return outParms;
+    public AuthOutParms getAuthOutParms() {
+        return authOutParms;
     }
 
-    public void setOutParms(@Element(name = "outParms") OutParms outParms) {
-        this.outParms = outParms;
+    public void setAuthOutParms(@Element (name = "outParms") AuthOutParms authOutParms) {
+        this.authOutParms = authOutParms;
     }
+
+    
 }

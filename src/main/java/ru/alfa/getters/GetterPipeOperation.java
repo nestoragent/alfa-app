@@ -1,6 +1,8 @@
 package ru.alfa.getters;
 
 import ru.alfa.objects.InCommonParms;
+import ru.alfa.objects.OutParms;
+import ru.alfa.objects.pipe.AuthOutParms;
 import ru.alfa.objects.pipe.PipeEnvelope;
 import ru.alfa.objects.pipe.WSCustomerOperationAuthorizationMethodsGet;
 import ru.alfa.requests.RequestRetrofitXML;
@@ -59,10 +61,10 @@ public class GetterPipeOperation {
     * Синхронный метод
     * Создание Pipe операции
     * @param clientPIN - пин клиента
-    * @return String - номер телефона
+    * @return AuthOutParms - выходные параметры ответа сервера
     * @throws Exception - ошибка парсинга/получения ответа от сервера
      */
-    public String getRefCode() throws Exception {
+    public AuthOutParms getRefCode() throws Exception {
 
         PipeEnvelope envelope = new PipeEnvelope();
         WSCustomerOperationAuthorizationMethodsGet authorizationMethodsGet
@@ -72,9 +74,7 @@ public class GetterPipeOperation {
         envelope.setAuthorizationMethodsGet(authorizationMethodsGet);
 
         String xml = new XMLConventer().serializerXML(envelope);
-
-        return new RequestRetrofitXML().postWSCustomerOperationAuthorizationMethods10(RequestRetrofitXML.PATH_PIPE,
-                xml);
+        return new RequestRetrofitXML().postWSCustomerOperationAuthorizationMethods10(xml);
     }
 
 }

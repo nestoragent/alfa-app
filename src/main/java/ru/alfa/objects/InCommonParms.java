@@ -1,5 +1,5 @@
 
-package ru.alfa.objects.clientPhone;
+package ru.alfa.objects;
 
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Root;
@@ -8,13 +8,20 @@ import org.simpleframework.xml.Root;
 public class InCommonParms {
     
     @Element
-    private String userID;   
+    private final String userID;   
     @Element
-    private int branchNumber;    
+    private final int branchNumber;    
     @Element
-    private String externalSystemCode;    
+    private final String externalSystemCode;    
     @Element
-    private String externalUserCode;
+    private final String externalUserCode;
+    
+    public InCommonParms() {
+      this.userID = "IBSR";  
+      this.branchNumber = 0000;
+      this.externalSystemCode = "RECOB01";
+      this.externalUserCode = "AMWVBONDS";      
+   }   
 
    public InCommonParms(String userID, int branchNumber, String externalSystemCode, String externalUserCode) {
       this.userID = userID;  

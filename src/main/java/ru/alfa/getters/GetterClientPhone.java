@@ -13,26 +13,26 @@ public class GetterClientPhone {
     private final String clientPIN;
 
     /*   
-    *Конструктор с тестовым клиентом
-    *String clientPIN - пин клиента
+    *РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ СЃ С‚РµСЃС‚РѕРІС‹Рј РєР»РёРµРЅС‚РѕРј
+    *String clientPIN - РїРёРЅ РєР»РёРµРЅС‚Р°
      */
     public GetterClientPhone() {
         this.clientPIN = "B81206";
     }
 
     /*   
-    *Конструктор принимающий в качестве входных параметров ПИН клиента
-    *String clientPIN - пин клиента
+    *РљРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ РїСЂРёРЅРёРјР°СЋС‰РёР№ РІ РєР°С‡РµСЃС‚РІРµ РІС…РѕРґРЅС‹С… РїР°СЂР°РјРµС‚СЂРѕРІ РџРРќ РєР»РёРµРЅС‚Р°
+    *String clientPIN - РїРёРЅ РєР»РёРµРЅС‚Р°
      */
     public GetterClientPhone(String clientPIN) {
         this.clientPIN = clientPIN;
     }
 
-    /*
-    * Синхронный метод
-    * @param clientPIN - пин клиента
-    * @return String - номер телефона
-    * @throws Exception - ошибка парсинга/получения ответа от сервера
+     /*
+    * РЎРёРЅС…СЂРѕРЅРЅС‹Р№ РјРµС‚РѕРґ
+    * @param clientPIN - РїРёРЅ РєР»РёРµРЅС‚Р°
+    * @return String - РЅРѕРјРµСЂ С‚РµР»РµС„РѕРЅР°
+    * @throws Exception - РѕС€РёР±РєР° РїР°СЂСЃРёРЅРіР°/РїРѕР»СѓС‡РµРЅРёСЏ РѕС‚РІРµС‚Р° РѕС‚ СЃРµСЂРІРµСЂР°
      */
     public String getPhone() throws Exception {
 
@@ -44,10 +44,10 @@ public class GetterClientPhone {
         String xml = new XMLConventer().serializerXML(phoneEnvelope);
 
         RequestRetrofitXML requestRetrofit = new RequestRetrofitXML();
-        ResultSet resultClientPhone = requestRetrofit.postWSCustomerExtendedInfoCL(xml);
-        if (resultClientPhone != null) {
-            if (resultClientPhone.getResultList().getAnm().equals("PHCL")) {
-                return resultClientPhone.getResultList().getAdt();
+        ResultSet resultSet = requestRetrofit.postWSCustomerExtendedInfoCL(xml);
+        if (resultSet != null) {
+            if (resultSet.getResultList().getAnm().equals("PHCL")) {
+                return resultSet.getResultList().getAdt();
             }
         }
         return null;

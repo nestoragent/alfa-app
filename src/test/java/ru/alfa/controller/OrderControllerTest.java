@@ -19,7 +19,7 @@ public class OrderControllerTest {
         OrderController orderController = new OrderController();
 
         //act
-        String response = orderController.postOrderValidation("1", 2, 3, 5, 6, 7, "");
+        String response = orderController.postOrderValidation("1", "2", "3", "5", "6", "7", "");
 
         //assert
         JSONParser parser = new JSONParser();

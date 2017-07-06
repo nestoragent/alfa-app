@@ -22,8 +22,8 @@ public class RequestRetrofitJson {
     private static Retrofit mRetrofit;
     private static RequestRetrofitJson requestRetrofitJson;
 
-     /*   
-      *����������� �� ��������� ���������������� ��������� Retrofit
+    /*   
+      *Конструктор по умолчанию инициализирующий экземпляр Retrofit
      */
     private RequestRetrofitJson() {
         mRetrofit = new Retrofit.Builder()
@@ -38,12 +38,12 @@ public class RequestRetrofitJson {
         return requestRetrofitJson;
     }
 
-     /*
-    * ���������� �����
-    * ������ ���������� ������ �� �� id
-    * @param String assetsId - id ������
-    * @return  - ������ ���������� ���� ������ � ��� ������ �������
-    * @throws IOException - ������ ��������� ������ �� �������
+    /*
+    * Синхронный метод
+    * Запрос конкретной бумаги по ее id
+    * @param String assetsId - id бумаги
+    * @return  - объект содержащий тело ответа и код ответа сервера
+    * @throws IOException - ошибка получения ответа от сервера
      */
     public ServerResponse getAssetsIdRequest(String assetsId) throws IOException {
 
@@ -57,12 +57,12 @@ public class RequestRetrofitJson {
     }
     
     
-     /*
-    * ���������� �����
-    * ���������� ��������� ���������
-    * @param Order order - ��������� Order
-    * @return  - ������ ���������� ���� ������ � ��� ������ �������
-    * @throws IOException - ������ ��������� ������ �� �������
+      /*
+    * Синхронный метод
+    * Исполнение торгового поручения
+    * @param Order order - экземпляр Order
+    * @return  - объект содержащий тело ответа и код ответа сервера
+    * @throws IOException - ошибка получения ответа от сервера
      */
     public ServerResponse postOrder(Order order) throws IOException {
 
@@ -83,12 +83,12 @@ public class RequestRetrofitJson {
     }
     
     
-    /*
-    * ���������� �����
-    * ���������� ��������� ���������
-    * @param orderValidation OrderValidation - ��������� OrderValidation
-    * @return  - ������ ���������� ���� ������ � ��� ������ �������
-    * @throws IOException - ������ ��������� ������ �� �������
+   /*
+    * Синхронный метод
+    * Валидация торгового поручения
+    * @param orderValidation OrderValidation - экземпляр OrderValidation
+    * @return  - объект содержащий тело ответа и код ответа сервера
+    * @throws IOException - ошибка получения ответа от сервера
      */
     public ServerResponse postOrderValidation(OrderValidation orderValidation) throws IOException {
 

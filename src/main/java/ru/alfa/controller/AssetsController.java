@@ -24,14 +24,46 @@ public class AssetsController {
     @ResponseBody
     String postAssetsById(@RequestParam String id) {
         ServerResponse response;
-        try {
-            response = RequestRetrofitJson.getInstance().getAssetsIdRequest(id);
-            log.info("Done request for get assets by id. response: " + response.getJsonMessage());
-        } catch (IOException e) {
-            log.debug("[ERROR]", e);
-            return "Error when call getAssetsIdRequest. Message: " + e.getMessage();
-        }
-        return response.getJsonMessage();
+//        try {
+//            response = RequestRetrofitJson.getInstance().getAssetsIdRequest(id);
+//            log.info("Done request for get assets by id. response: " + response.getJsonMessage());
+//        } catch (IOException e) {
+//            log.debug("[ERROR]", e);
+//            return "Error when call getAssetsIdRequest. Message: " + e.getMessage();
+//        }
+//        return response.getJsonMessage();
+        System.out.println("id: " + id);
+        return "{\n" +
+                "    \"aci\": 11.69,\n" +
+                "    \"aciTotal\": 0,\n" +
+                "    \"activity\": 1,\n" +
+                "    \"buyPrice\": 176.33,\n" +
+                "    \"coupon\": 12.75,\n" +
+                "    \"couponPeriod\": 180,\n" +
+                "    \"paymentsTotal\": 0,\n" +
+                "    \"duration\": 7.1,\n" +
+                "    \"isin\": \"XS0088543193\",\n" +
+                "    \"maturityDate\": \"2028-06-24T00:00:00.0000000-07:00\",\n" +
+                "    \"name\": \"Еврообл РФ28 XS0088543193\",\n" +
+                "    \"tradePlace\": \"\",\n" +
+                "    \"nominalCurrency\": \"USD\",\n" +
+                "    \"nominalCurrencyValue\": 0,\n" +
+                "    \"nominal\": 1000,\n" +
+                "    \"priceCurrency\": \"%\",\n" +
+                "    \"quantity\": 0,\n" +
+                "    \"registryNumber\": \"MK-0-CM-119\",\n" +
+                "    \"sellPrice\": 178.05,\n" +
+                "    \"ticker\": \"MF0628XS\",\n" +
+                "    \"toolType\": \"\",\n" +
+                "    \"ytm\": 3.97,\n" +
+                "    \"id\": 2237,\n" +
+                "    \"expense\": 0,\n" +
+                "    \"grossIncome\": 0,\n" +
+                "    \"yield\": 0,\n" +
+                "    \"holdingTotalDays\": 0,\n" +
+                "    \"qualifiedOnly\": true,\n" +
+                "    \"currentValue\": null\n" +
+                "}\n";
     }
 
 }

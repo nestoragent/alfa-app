@@ -30,15 +30,7 @@ public class PipeEnvelopeSuccess {
         return workContext;
     }
 
-    public void setWorkContext(String workContext) {
-        this.workContext = workContext;
-    }
-
     public WSCustomerOperationAuthorizationMethodsGetResponse getAuthorizationMethodsGetResponse() {
         return authorizationMethodsGetResponse;
-    }
-
-    public void setAuthorizationMethodsGetResponse(WSCustomerOperationAuthorizationMethodsGetResponse authorizationMethodsGetResponse) {
-        this.authorizationMethodsGetResponse = authorizationMethodsGetResponse;
     }
 }

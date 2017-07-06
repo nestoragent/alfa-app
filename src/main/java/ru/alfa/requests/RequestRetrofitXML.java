@@ -12,7 +12,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.simplexml.SimpleXmlConverterFactory;
 import ru.alfa.objects.OutParms;
-import ru.alfa.objects.clientPhone.ResultSet;
+import ru.alfa.objects.clientPhone.PhoneEnvelopeSuccess;
 import ru.alfa.objects.codeValidation.CodeEnvelopeSuccess;
 import ru.alfa.objects.codeValidation.SMSEnvelopeSuccess;
 import ru.alfa.objects.pipe.AuthOutParms;
@@ -34,7 +34,7 @@ public class RequestRetrofitXML {
     * @return ResultSet - выходные параметры ответа сервера
     * @throws Exception - ошибка парсинга/получения ответа от сервера
      */
-    public ResultSet postWSCustomerExtendedInfoCL(String xml) throws Exception {
+    public PhoneEnvelopeSuccess postWSCustomerExtendedInfoCL(String xml) throws Exception {
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://vuwsint:9081/")
@@ -51,8 +51,8 @@ public class RequestRetrofitXML {
         String bodyXML = responseBody.body().string();
         if (bodyXML != null) {
             Serializer serializer = new Persister();
-            ResultSet resultSet = serializer.read(ResultSet.class, bodyXML);
-            return resultSet;
+            PhoneEnvelopeSuccess envelope = serializer.read(PhoneEnvelopeSuccess.class, bodyXML);
+            return envelope;
         }
         return null;
     }

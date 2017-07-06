@@ -22,19 +22,8 @@ public class OutCommonParms {
         return name;
     }
 
-    public void setName(@Element(name = "name") String name) {
-        this.name = name;
-    }
-
     public String getValue() {
         return value;
     }
-
-    public void setValue(@Element(name = "value") String value) {
-        this.value = value;
-    }
-    
-    
-    
     
 }

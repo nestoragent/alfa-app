@@ -23,7 +23,10 @@ public class InCommonParms {
       this.externalUserCode = "AMWVBONDS";      
    }   
 
-   public InCommonParms(String userID, int branchNumber, String externalSystemCode, String externalUserCode) {
+   public InCommonParms(@Element(name = "userID") String userID, 
+                        @Element(name = "branchNumber")int branchNumber, 
+                        @Element(name = "externalSystemCode")String externalSystemCode,
+                        @Element(name = "externalUserCode")String externalUserCode) {
       this.userID = userID;  
       this.branchNumber = branchNumber;
       this.externalSystemCode = externalSystemCode;

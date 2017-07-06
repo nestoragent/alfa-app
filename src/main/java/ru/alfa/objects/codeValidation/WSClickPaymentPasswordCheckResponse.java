@@ -2,10 +2,7 @@
 package ru.alfa.objects.codeValidation;
 
 import org.simpleframework.xml.Element;
-import org.simpleframework.xml.Namespace;
-import org.simpleframework.xml.NamespaceList;
 import org.simpleframework.xml.Path;
-import org.simpleframework.xml.Root;
 import ru.alfa.objects.OutCommonParms;
 import ru.alfa.objects.OutParms;
 
@@ -13,10 +10,6 @@ import ru.alfa.objects.OutParms;
  *
  * @author Dmitry
  */
- @Root(name = "ns3:WSClickPaymentPasswordCheckResponse")
-@NamespaceList({
-    @Namespace(reference = "http://WSCommonTypes10.CS.ws.alfabank.ru", prefix = "ns2"),
-    @Namespace(reference = "http://WSClickPaymentPassword10.PS.CS.ws.alfabank.ru", prefix ="ns3")})
 public class WSClickPaymentPasswordCheckResponse {
     
     @Path("response")
@@ -31,15 +24,7 @@ public class WSClickPaymentPasswordCheckResponse {
         return outCommonParms;
     }
 
-    public void setOutCommonParms(@Element(name = "outCommonParms") OutCommonParms outCommonParms) {
-        this.outCommonParms = outCommonParms;
-    }
-
     public OutParms getOutParms() {
         return outParms;
-    }
-
-    public void setOutParms(@Element(name = "outParms") OutParms outParms) {
-        this.outParms = outParms;
     }
 }

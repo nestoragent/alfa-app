@@ -13,10 +13,6 @@ import ru.alfa.objects.OutParms;
  *
  * @author Dmitry
  */
-@Root(name = "ns3:WSClickPaymentPasswordGetResponse")
-@NamespaceList({
-    @Namespace(reference = "http://WSCommonTypes10.CS.ws.alfabank.ru", prefix = "ns2"),
-    @Namespace(reference = "http://WSClickPaymentPassword10.PS.CS.ws.alfabank.ru", prefix ="ns3")})
 public class WSClickPaymentPasswordGetResponse {
     
     @Path("response")
@@ -30,17 +26,8 @@ public class WSClickPaymentPasswordGetResponse {
     public OutCommonParms getOutCommonParms() {
         return outCommonParms;
     }
-
-    public void setOutCommonParms(@Element(name = "outCommonParms") OutCommonParms outCommonParms) {
-        this.outCommonParms = outCommonParms;
-    }
-
+    
     public OutParms getOutParms() {
         return outParms;
-    }
-
-    public void setOutParms(@Element(name = "outParms") OutParms outParms) {
-        this.outParms = outParms;
-    }
-    
+    }    
 }

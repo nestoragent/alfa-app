@@ -10,10 +10,9 @@ import ru.alfa.objects.InCommonParms;
  *
  * @author Dmitry
  */
-@Root(name = "wsc:WSCustomerOperationAuthorizationMethodsGet")
 public class WSClickPaymentPasswordGet {
 
-    @ElementList
+    @Element
     private InCommonParms inCommonParms;
 
     @Path("inParms")
@@ -23,8 +22,8 @@ public class WSClickPaymentPasswordGet {
     @Element
     private String methodCode;
 
-    public WSClickPaymentPasswordGet(@Element(name = "cus") String ref,
-                                     @Element(name = "xm") String methodCode) {
+    public WSClickPaymentPasswordGet(@Element(name = "ref") String ref,
+                                     @Element(name = "methodCode") String methodCode) {
         this.ref = ref;
         this.methodCode = methodCode;
     }

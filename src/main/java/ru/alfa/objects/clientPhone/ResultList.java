@@ -4,15 +4,12 @@ package ru.alfa.objects.clientPhone;
 import org.simpleframework.xml.Attribute;
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Namespace;
-import org.simpleframework.xml.NamespaceList;
-import org.simpleframework.xml.Root;
 
-@Root(name = "list")
-@Namespace(reference = "http://WSCommonTypes10.CS.ws.alfabank.ru", prefix = "p548")
+
 public class ResultList {
 
-    @Attribute (name = "xsi:type")   
-    private String type = "p548:WSTypeAddInfoAlphanumeric";
+    @Attribute (name = "type", required = false)  
+    private String type;
 
     public String getType() {
         return type;
@@ -31,15 +28,7 @@ public class ResultList {
         return anm;
     }
 
-    public void setAnm(String anm) {
-        this.anm = anm;
-    }
-
     public String getAdt() {
         return adt;
-    }
-
-    public void setAdt(String adt) {
-        this.adt = adt;
     }
 }

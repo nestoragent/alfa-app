@@ -2,6 +2,7 @@ package ru.alfa.objects.pipe;
 
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Namespace;
+import org.simpleframework.xml.NamespaceList;
 import org.simpleframework.xml.Path;
 import org.simpleframework.xml.Root;
 
@@ -19,7 +20,10 @@ public class PipeEnvelopeSuccess {
     private String workContext;
 
     @Path("S:Body")
-    @Element
+    @Element(name = "WSCustomerOperationAuthorizationMethodsGetResponse")
+    @NamespaceList({
+        @Namespace(reference = "http://WSCommonTypes10.CS.ws.alfabank.ru", prefix = "ns2"),
+        @Namespace(reference = "http://WSCustomerOperationAuthorizationMethods10.PS.CS.ws.alfabank.ru", prefix = "ns3")})
     private WSCustomerOperationAuthorizationMethodsGetResponse authorizationMethodsGetResponse;
 
     public String getWorkContext() {

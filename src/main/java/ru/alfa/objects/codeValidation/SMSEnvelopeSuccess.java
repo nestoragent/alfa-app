@@ -2,6 +2,7 @@ package ru.alfa.objects.codeValidation;
 
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.Namespace;
+import org.simpleframework.xml.NamespaceList;
 import org.simpleframework.xml.Path;
 import org.simpleframework.xml.Root;
 
@@ -19,22 +20,17 @@ public class SMSEnvelopeSuccess {
     private String workContext;
 
     @Path("S:Body")
-    @Element
+    @Element(name = "WSClickPaymentPasswordGetResponse")
+    @NamespaceList({
+        @Namespace(reference = "http://WSCommonTypes10.CS.ws.alfabank.ru", prefix = "ns2"),
+        @Namespace(reference = "http://WSClickPaymentPassword10.PS.CS.ws.alfabank.ru", prefix = "ns3")})
     private WSClickPaymentPasswordGetResponse clickPaymentPasswordGetResponse;
 
     public String getWorkContext() {
         return workContext;
     }
 
-    public void setWorkContext(String workContext) {
-        this.workContext = workContext;
-    }
-
     public WSClickPaymentPasswordGetResponse getClickPaymentPasswordGetResponse() {
         return clickPaymentPasswordGetResponse;
-    }
-
-    public void setClickPaymentPasswordGetResponse(WSClickPaymentPasswordGetResponse clickPaymentPasswordGetResponse) {
-        this.clickPaymentPasswordGetResponse = clickPaymentPasswordGetResponse;
     }
 }

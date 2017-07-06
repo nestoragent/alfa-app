@@ -20,10 +20,10 @@ public class CodeEnvelope {
     
     @Element(name = "Header")
     @Namespace(reference = "http://schemas.xmlsoap.org/soap/envelope/")
-    private String header;
+    private String header="";
 
     @Path("soapenv:Body")
-    @Element
+    @Element(name = "wsc:WSClickPaymentPasswordCheck")
     private WSClickPaymentPasswordCheck clickPaymentPasswordCheck;
 
     public void setHeader(String header) {

@@ -1,9 +1,12 @@
 package ru.alfa.objects.pipe;
 
+import java.lang.annotation.Retention;
 import java.util.List;
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.ElementList;
 import org.simpleframework.xml.Path;
+import org.simpleframework.xml.convert.Convert;
+import ru.alfa.tools.EmptyElementConverter;
 
 /**
  *
@@ -14,10 +17,11 @@ public class AuthOutParms {
     @Element
     private String ref;
     @Element
+    @Convert(EmptyElementConverter.class)
     private String actionId;
 
     @Path("authMethodList")
-    @ElementList(name = "authMethodListRow")
+    @ElementList(name = "authMethodListRow", inline = true, required = false)
     private List<AuthMethodListRow> list;
     
 
@@ -25,23 +29,11 @@ public class AuthOutParms {
         return ref;
     }
 
-    public void setRef(String ref) {
-        this.ref = ref;
-    }
-
     public String getActionId() {
         return actionId;
     }
 
-    public void setActionId(String actionId) {
-        this.actionId = actionId;
-    }
-
     public List<AuthMethodListRow> getList() {
         return list;
-    }
-
-    public void setList(List<AuthMethodListRow> list) {
-        this.list = list;
     }
 }

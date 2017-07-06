@@ -1,43 +1,46 @@
-
 package ru.alfa.objects.pipe;
 
 import org.simpleframework.xml.Element;
+import org.simpleframework.xml.convert.Convert;
+import ru.alfa.tools.EmptyElementConverter;
 
 /**
  *
  * @author Dmitry
  */
 public class AuthMethodListRow {
-    
+
     @Element
-    private String methodCode;  
+    private String methodCode;
     @Element
-    private String methodDsc;  
+    private String methodDsc;
     @Element
-    private String deviceID;  
+    @Convert(EmptyElementConverter.class)
+    private String deviceID;
     @Element
-    private String deviceType;   
+    @Convert(EmptyElementConverter.class)
+    private String deviceType;
     @Element
     private String passwordSize;
 
-    public void setMethodCode(String methodCode) {
-        this.methodCode = methodCode;
+    public String getMethodCode() {
+        return methodCode;
     }
 
-    public void setMethodDsc(String methodDsc) {
-        this.methodDsc = methodDsc;
+    public String getMethodDsc() {
+        return methodDsc;
     }
 
-    public void setDeviceID(String deviceID) {
-        this.deviceID = deviceID;
+    public String getDeviceID() {
+        return deviceID;
     }
 
-    public void setDeviceType(String deviceType) {
-        this.deviceType = deviceType;
+    public String getDeviceType() {
+        return deviceType;
     }
 
-    public void setPasswordSize(String passwordSize) {
-        this.passwordSize = passwordSize;
+    public String getPasswordSize() {
+        return passwordSize;
     }
-    
+
 }

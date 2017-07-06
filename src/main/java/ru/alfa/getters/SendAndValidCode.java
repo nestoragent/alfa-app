@@ -2,7 +2,9 @@ package ru.alfa.getters;
 
 import ru.alfa.objects.InCommonParms;
 import ru.alfa.objects.OutParms;
+import ru.alfa.objects.codeValidation.CodeEnvelope;
 import ru.alfa.objects.codeValidation.SMSEnvelope;
+import ru.alfa.objects.codeValidation.WSClickPaymentPasswordCheck;
 import ru.alfa.objects.codeValidation.WSClickPaymentPasswordGet;
 import ru.alfa.requests.RequestRetrofitXML;
 import ru.alfa.tools.XMLConventer;
@@ -59,7 +61,11 @@ public class SendAndValidCode {
     * @throws Exception - ошибка парсинга/получения ответа от сервера
      */
     public OutParms sendSMS() throws Exception {
-        return requestServer(1);
+        SMSEnvelope envelope = new SMSEnvelope();
+        WSClickPaymentPasswordGet passwordGet = new WSClickPaymentPasswordGet(ref, methodCode);
+        passwordGet.setInCommonParms(new InCommonParms());       
+        envelope.setClickPaymentPasswordGet(passwordGet);
+        return requestServer(envelope, 1);
     }
 
     /*
@@ -69,23 +75,22 @@ public class SendAndValidCode {
     * @throws Exception - ошибка парсинга/получения ответа от сервера
      */
     public OutParms codeValidation() throws Exception {
-        return requestServer(2);
+        CodeEnvelope envelope = new CodeEnvelope();
+        WSClickPaymentPasswordCheck check = new WSClickPaymentPasswordCheck(ref, pwd);
+        check.setInCommonParms(new InCommonParms());        
+        envelope.setClickPaymentPasswordCheck(check);
+        return requestServer(envelope, 2);
     }
 
     /*
     * Синхронный метод
     * вызов метода отправки запроса
     * @param int par - переменная-ключ для обозначения вызывающего метода
+    * @param Object envelope - экземпляр сериализуемого объекта
     * @return OutParms - выходные параметры ответа сервера
     * @throws Exception - ошибка парсинга/получения ответа от сервера
      */
-    private OutParms requestServer(int par) throws Exception {
-        SMSEnvelope envelope = new SMSEnvelope();
-        WSClickPaymentPasswordGet passwordGet = new WSClickPaymentPasswordGet(ref, methodCode);
-        passwordGet.setInCommonParms(new InCommonParms());
-        passwordGet.setInCommonParms(new InCommonParms());
-        envelope.setClickPaymentPasswordGet(passwordGet);
-
+    private OutParms requestServer(Object envelope, int par) throws Exception { 
         String xml = new XMLConventer().serializerXML(envelope);
         return new RequestRetrofitXML().postWSClickPaymentPassword(xml, par);
     }

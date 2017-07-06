@@ -1,16 +1,11 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package ru.alfa.objects.clientPhone;
 
-import ru.alfa.objects.clientPhone.SoapBody;
-import java.util.List;
+
 import org.simpleframework.xml.Element;
-import org.simpleframework.xml.ElementList;
 import org.simpleframework.xml.Namespace;
 import org.simpleframework.xml.NamespaceList;
+import org.simpleframework.xml.Path;
 import org.simpleframework.xml.Root;
 
 /**
@@ -22,20 +17,25 @@ import org.simpleframework.xml.Root;
     @Namespace(reference = "http://schemas.xmlsoap.org/soap/envelope/", prefix = "soapenv"),
     @Namespace(reference = "http://WSCustomerExtendedInfoCL12.EQ.CS.ws.alfabank.ru", prefix = "wsc")
 })
-public class ClientPhone {
+public class PhoneEnvelope {
 
     @Element(name = "Header")
-    @Namespace(reference = "soapenv")
+    @Namespace(reference = "http://schemas.xmlsoap.org/soap/envelope/")
     private String mHeader;
 
+    @Path("soapenv:Body")
     @Element
-    private SoapBody body;
+    private WSCustomerExtendedInfoCLGet cLGet;
+    
 
     public void setmHeader(String mHeader) {
         this.mHeader = mHeader;
     }
 
-    public void setBody(SoapBody body) {
-        this.body = body;
+    public void setcLGet(WSCustomerExtendedInfoCLGet cLGet) {
+        this.cLGet = cLGet;
     }
+    
+    
+
 }

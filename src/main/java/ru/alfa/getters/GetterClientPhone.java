@@ -1,53 +1,54 @@
 package ru.alfa.getters;
 
-import java.io.StringWriter;
-import java.io.Writer;
-import org.simpleframework.xml.Serializer;
-import org.simpleframework.xml.core.Persister;
-import ru.alfa.objects.resultClientPhone.ResultClientPhone;
-import ru.alfa.objects.clientPhone.ClientPhone;
-import ru.alfa.objects.clientPhone.InCommonParms;
-import ru.alfa.objects.clientPhone.InParams;
-import ru.alfa.objects.clientPhone.SoapBody;
+
+import ru.alfa.objects.InCommonParms;
+import ru.alfa.objects.clientPhone.ResultSet;
+import ru.alfa.objects.clientPhone.PhoneEnvelope;
 import ru.alfa.objects.clientPhone.WSCustomerExtendedInfoCLGet;
 import ru.alfa.requests.RequestRetrofitXML;
+import ru.alfa.tools.XMLConventer;
 
 public class GetterClientPhone {
 
     private final String clientPIN;
 
-    /*
+    /*   
+    *Конструктор с тестовым клиентом
+    *String clientPIN - пин клиента
+     */
+    public GetterClientPhone() {
+        this.clientPIN = "B81206";
+    }
+
+    /*   
+    *Конструктор принимающий в качестве входных параметров ПИН клиента
+    *String clientPIN - пин клиента
      */
     public GetterClientPhone(String clientPIN) {
         this.clientPIN = clientPIN;
     }
 
-    /*
+     /*
+    * Синхронный метод
+    * @param clientPIN - пин клиента
+    * @return String - номер телефона
+    * @throws Exception - ошибка парсинга/получения ответа от сервера
      */
     public String getPhone() throws Exception {
 
-        Writer writer = new StringWriter();
-        Serializer serializer = new Persister();
+        PhoneEnvelope phoneEnvelope = new PhoneEnvelope();
+        WSCustomerExtendedInfoCLGet cLGet = new WSCustomerExtendedInfoCLGet(clientPIN);
+        cLGet.setInCommonParms(new InCommonParms());
+        phoneEnvelope.setcLGet(cLGet);
 
-        try {
-            ClientPhone clientPhone = new ClientPhone();
-            SoapBody soapBody = new SoapBody();
-            WSCustomerExtendedInfoCLGet cLGet = new WSCustomerExtendedInfoCLGet();
-            cLGet.setInCommonParms(new InCommonParms("WSEF", 0000, "NFR", "asdad"));
-            cLGet.setInParams(new InParams(clientPIN));
-            soapBody.setcLGet(cLGet);
-            clientPhone.setBody(soapBody);
+        String xml = new XMLConventer().serializerXML(phoneEnvelope);
 
-            serializer.write(clientPhone, writer);
-            String xml = writer.toString();
-
-            RequestRetrofitXML requestRetrofit = new RequestRetrofitXML();
-            ResultClientPhone resultClientPhone = requestRetrofit.postWSCustomerExtendedInfoCL(xml);
-            if (resultClientPhone != null) {
-                return resultClientPhone.getClientList().getAdt();
+        RequestRetrofitXML requestRetrofit = new RequestRetrofitXML();
+        ResultSet resultSet = requestRetrofit.postWSCustomerExtendedInfoCL(xml);
+        if (resultSet != null) {
+            if (resultSet.getResultList().getAnm().equals("PHCL")) {
+                return resultSet.getResultList().getAdt();
             }
-        } catch (Exception e) {
-            System.err.println("Error serialization " + e.getMessage());
         }
         return null;
     }

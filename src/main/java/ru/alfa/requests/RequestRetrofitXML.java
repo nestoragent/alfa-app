@@ -64,7 +64,7 @@ public class RequestRetrofitXML {
     * @return AuthOutParms - выходные параметры ответа сервера
     * @throws Exception - ошибка парсинга/получения ответа от сервера
      */
-    public AuthOutParms postWSCustomerOperationAuthorizationMethods10(String xml) throws IOException, Exception {
+    public AuthOutParms postWSCustomerOperationAuthorizationMethods10(String xml) throws Exception {
 
         String bodyXML = getResponseWSServer(PATH_PIPE, xml);
         AuthOutParms authOutParms = null;
@@ -84,7 +84,7 @@ public class RequestRetrofitXML {
     * @return OutParms - выходные параметры ответа сервера
     * @throws Exception - ошибка парсинга/получения ответа от сервера
      */
-    public OutParms postWSClickPaymentPassword(String xml, int par) throws IOException, Exception {
+    public OutParms postWSClickPaymentPassword(String xml, int par) throws Exception {
 
         OutParms outParms = null;
         String bodyXML = getResponseWSServer(PATH_SMS, xml);

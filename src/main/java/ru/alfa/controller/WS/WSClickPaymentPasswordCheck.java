@@ -19,7 +19,7 @@ public class WSClickPaymentPasswordCheck {
     @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST})
     public
     @ResponseBody
-    String getTelephoneNumber(
+    String codeValidation(
             @RequestParam(value = "ref", required = true) String ref,
             @RequestParam(value = "pwd", required = true, defaultValue = "pwd") String pwd
     ) {

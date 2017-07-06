@@ -19,7 +19,7 @@ public class WSClickPaymentPasswordGet {
     @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST})
     public
     @ResponseBody
-    String getTelephoneNumber(
+    String sendSMS(
             @RequestParam(value = "ref", required = true) String ref,
             @RequestParam(value = "methodCode", required = true, defaultValue = "SMSPWD") String methodCode
     ) {

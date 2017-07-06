@@ -19,7 +19,7 @@ public class WSCustomerOperationAuthorizationMethods10 {
     @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST})
     public
     @ResponseBody
-    String getTelephoneNumber(
+    String createPipeOperation(
             @RequestParam(value = "cus", required = false, defaultValue = "B81206") String cus,
             @RequestParam(value = "xm", required = true, defaultValue = "NF") String xm,
             @RequestParam(value = "typ", required = true, defaultValue = "PC3") String typ,

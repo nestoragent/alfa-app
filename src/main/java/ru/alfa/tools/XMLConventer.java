@@ -5,6 +5,7 @@ import java.io.StringWriter;
 import java.io.Writer;
 import org.simpleframework.xml.Serializer;
 import org.simpleframework.xml.core.Persister;
+import ru.alfa.objects.clientPhone.PhoneEnvelope;
 
 /**
  *
@@ -24,5 +25,4 @@ public class XMLConventer {
         serializer.write(object, writer);
         return writer.toString();
     }
-
 }

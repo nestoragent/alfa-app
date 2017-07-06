@@ -1,43 +1,34 @@
-
 package ru.alfa.objects.pipe;
 
 import org.simpleframework.xml.Element;
-import org.simpleframework.xml.ElementList;
-import org.simpleframework.xml.Namespace;
-import org.simpleframework.xml.NamespaceList;
 import org.simpleframework.xml.Path;
-import org.simpleframework.xml.Root;
 import ru.alfa.objects.InCommonParms;
 
 /**
  *
  * @author Dmitry
  */
-@Root(name = "ns3:WSCustomerOperationAuthorizationMethodsGet")
-@NamespaceList({
-    @Namespace(reference = "http://WSCommonTypes10.CS.ws.alfabank.ru", prefix = "ns2")
-    ,
-    @Namespace(reference = "http://WSCustomerOperationAuthorizationMethods10.PS.CS.ws.alfabank.ru", prefix = "ns3")
-})
 public class WSCustomerOperationAuthorizationMethodsGet {
 
-    @ElementList
+    @Element
     private InCommonParms inCommonParms;
 
     @Path("inParms")
     @Element
-    private String cus;
+    private final String cus;
     @Path("inParms")
     @Element
-    private String xm;
+    private final String xm;
     @Path("inParms")
     @Element
-    private String typ;
+    private final String typ;
 
     @Path("inParms/additionalInfo/additionalInfoRow[1]")
-    private String name;
+    @Element
+    private final String name;
     @Path("inParms/additionalInfo/additionalInfoRow[1]")
-    private String value;
+    @Element
+    private final String value;
 
     public WSCustomerOperationAuthorizationMethodsGet(@Element(name = "cus") String cus,
                                                       @Element(name = "xm") String xm,

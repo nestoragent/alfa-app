@@ -2,8 +2,9 @@ package ru.alfa.getters;
 
 
 import ru.alfa.objects.InCommonParms;
-import ru.alfa.objects.clientPhone.ResultSet;
 import ru.alfa.objects.clientPhone.PhoneEnvelope;
+import ru.alfa.objects.clientPhone.PhoneEnvelopeSuccess;
+import ru.alfa.objects.clientPhone.ResultList;
 import ru.alfa.objects.clientPhone.WSCustomerExtendedInfoCLGet;
 import ru.alfa.requests.RequestRetrofitXML;
 import ru.alfa.tools.XMLConventer;
@@ -44,10 +45,12 @@ public class GetterClientPhone {
         String xml = new XMLConventer().serializerXML(phoneEnvelope);
 
         RequestRetrofitXML requestRetrofit = new RequestRetrofitXML();
-        ResultSet resultSet = requestRetrofit.postWSCustomerExtendedInfoCL(xml);
-        if (resultSet != null) {
-            if (resultSet.getResultList().getAnm().equals("PHCL")) {
-                return resultSet.getResultList().getAdt();
+        PhoneEnvelopeSuccess envelopeSuccess = requestRetrofit.postWSCustomerExtendedInfoCL(xml);
+        if (envelopeSuccess != null) {
+            for(ResultList list:envelopeSuccess.getcLGetResponse().getResultSet()){
+                if (list.getAnm().equals("PHCL")) {
+                    return list.getAdt();
+                }
             }
         }
         return null;

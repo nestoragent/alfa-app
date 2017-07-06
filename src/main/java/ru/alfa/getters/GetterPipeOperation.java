@@ -21,7 +21,8 @@ public class GetterPipeOperation {
     private final String value;
 
     /*
-    * Констуктор со значениями по умолчанию и тестовым клиентом 
+    * Констуктор со значениями по умолчанию и тестовым клиентом
+    * @param String value - номер телефона без знака +
      */
     public GetterPipeOperation(String value) {
         this.clientPIN = "B81206";
@@ -33,7 +34,8 @@ public class GetterPipeOperation {
 
     /*
     * Констуктор со значениями по умолчанию 
-      * @param String clientPIN - пин клиента
+    * @param String clientPIN - пин клиента
+    * @param String value - номер телефона без знака +
      */
     public GetterPipeOperation(String clientPIN, String value) {
         this.clientPIN = clientPIN;
@@ -47,6 +49,7 @@ public class GetterPipeOperation {
     * Констуктор
     * @param String clientPIN - пин клиента
     * @param String systemCode - системы (D1PF.D1XM). Значение должно быть настраиваемым 
+    * @param String value - номер телефона без знака +
      */
     public GetterPipeOperation(String clientPIN, String systemCode, String type,
                                String name, String value) {

@@ -19,10 +19,10 @@ public class SMSEnvelope {
 
     @Element(name = "Header")
     @Namespace(reference = "http://schemas.xmlsoap.org/soap/envelope/")
-    private String header;
+    private String header="";
 
     @Path("soapenv:Body")
-    @Element
+    @Element(name = "wsc:WSClickPaymentPasswordGet")
     private WSClickPaymentPasswordGet clickPaymentPasswordGet;
 
     public void setHeader(String header) {

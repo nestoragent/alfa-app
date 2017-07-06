@@ -5,7 +5,8 @@
  */
 package ru.alfa.objects.clientPhone;
 
-import org.simpleframework.xml.Element;
+import java.util.List;
+import org.simpleframework.xml.ElementList;
 import org.simpleframework.xml.Path;
 import org.simpleframework.xml.Root;
 
@@ -16,18 +17,11 @@ import org.simpleframework.xml.Root;
 @Root(strict = false)
 public class WSCustomerExtendedInfoCLGetResponse {
     
-    @Path("response/outParms/resultSet/list[1]")
-    @Element
-    private String anm;
-    @Path("response/outParms/resultSet/list[1]")
-    @Element
-    private String adt;
+    @Path("response/outParms")
+    @ElementList(name = "resultSet")
+    private List<ResultList> resultSet; 
 
-    public String getAnm() {
-        return anm;
+    public List<ResultList> getResultSet() {
+        return resultSet;
     }
-
-    public String getAdt() {
-        return adt;
-    }   
 }

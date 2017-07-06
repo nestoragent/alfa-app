@@ -1,6 +1,5 @@
 package ru.alfa.objects.pipe;
 
-import java.lang.annotation.Retention;
 import java.util.List;
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.ElementList;

@@ -10,11 +10,18 @@ import org.simpleframework.xml.Element;
  */
 
 public class ResultList {
+    
+    @Attribute
+    private String type;
 
     @Element
     private String anm;
     @Element
     private String adt;
+
+    public String getType() {
+        return type;
+    }
 
     public String getAnm() {
         return anm;

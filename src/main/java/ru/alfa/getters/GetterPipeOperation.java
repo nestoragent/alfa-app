@@ -1,7 +1,6 @@
 package ru.alfa.getters;
 
 import ru.alfa.objects.InCommonParms;
-import ru.alfa.objects.OutParms;
 import ru.alfa.objects.pipe.AuthOutParms;
 import ru.alfa.objects.pipe.PipeEnvelope;
 import ru.alfa.objects.pipe.WSCustomerOperationAuthorizationMethodsGet;

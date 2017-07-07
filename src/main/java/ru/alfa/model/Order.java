@@ -9,7 +9,6 @@ import lombok.ToString;
  * @author Dmitry
  */
 @Data
-@Builder
 @ToString
 public class Order {
 

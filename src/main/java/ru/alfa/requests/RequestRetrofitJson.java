@@ -5,6 +5,7 @@ import com.google.gson.Gson;
 import java.io.IOException;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
+import org.springframework.http.HttpStatus;
 import retrofit2.Call;
 import retrofit2.Response;
 import retrofit2.Retrofit;
@@ -113,6 +114,31 @@ public class RequestRetrofitJson {
         serverResponse.setJsonMessage(response.body().string());
         
         return serverResponse;
+    }
+
+    public HttpStatus getResponseCode(int code) {
+        HttpStatus status;
+        switch (code) {
+            case 400:
+                status = HttpStatus.BAD_REQUEST;
+                break;
+            case 412:
+                status = HttpStatus.PRECONDITION_FAILED;
+                break;
+            case 422:
+                status = HttpStatus.UNPROCESSABLE_ENTITY;
+                break;
+            case 406:
+                status = HttpStatus.NOT_ACCEPTABLE;
+                break;
+            case 503:
+                status = HttpStatus.INTERNAL_SERVER_ERROR;
+                break;
+            default:
+                status = HttpStatus.OK;
+
+        }
+        return status;
     }
 
 }

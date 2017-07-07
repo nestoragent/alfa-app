@@ -34,7 +34,6 @@ public class ValidationController {
             @RequestParam(value = "operation") String operation,
             @RequestParam(value = "amount") String amount,
             @RequestParam(value = "quantity") String quantity) {
-
         if (true) {
             System.out.println("pins: " + pins);
             System.out.println("assetId: " + assetId);
@@ -44,8 +43,9 @@ public class ValidationController {
             System.out.println("quantity: " + quantity);
             return ResponseEntity.status(HttpStatus.OK).body("{\"status\":2,\"message\":\"Лимиты рассчитаны\",\"tradeAccount\":\"30601840700009092110\",\"commissionAccount\":\"30601810400009092110\",\"missingForTrade\":0.0000,\"missingForCommission\":0.0000,\"amount\":0.00000000,\"quantity\":0,\"commission\":0.0000,\"generalAgreementId\":92110}");
         } else {
-            JsonObject responseJson = new JsonObject();
             ServerResponse serverResponse;
+            JsonObject jsonObject = new JsonObject();
+            jsonObject.add("status", new JsonPrimitive("Извините, что-то пошло не так, попробуйте позднее"));
 
             OrderValidation orderValidation = new OrderValidation();
             orderValidation.setPins(pins);
@@ -56,23 +56,21 @@ public class ValidationController {
                 orderValidation.setAmount(Integer.parseInt(amount));
                 orderValidation.setQuantity(Integer.parseInt(quantity));
             } catch (NumberFormatException e) {
-                responseJson.add("error", new JsonPrimitive("Error to parse one of 'assetId', " +
-                        "'generalAgreementId', 'operation', 'amount', 'quantity' parameters must be type int"));
                 log.info("Error message: " + e.getMessage());
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseJson);
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(jsonObject.toString());
             }
 
             try {
                 serverResponse = RequestRetrofitJson.getInstance().postOrderValidation(orderValidation);
             } catch (IOException e) {
                 log.debug("[ERROR]", e);
-                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(jsonObject.toString());
             }
-            return ResponseEntity.status(HttpStatus.OK).body(serverResponse.getJsonMessage());
+            HttpStatus status = RequestRetrofitJson.getInstance().getResponseCode(serverResponse.getCode());
+            String response = jsonObject.toString();
+            if (HttpStatus.OK.equals(status))
+                response = serverResponse.getJsonMessage();
+            return ResponseEntity.status(status).body(response);
         }
-
-
     }
-
-
 }

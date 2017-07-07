@@ -1,5 +1,7 @@
 package ru.alfa.controller;
 
+import com.google.gson.JsonObject;
+import com.google.gson.JsonPrimitive;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -56,17 +58,21 @@ public class AssetsController {
                     "    \"currentValue\": null\n" +
                     "}\n");
         } else {
+            JsonObject jsonObject = new JsonObject();
+            jsonObject.add("status", new JsonPrimitive("Извините, что-то пошло не так, попробуйте позднее"));
             ServerResponse serverResponse;
             try {
                 serverResponse = RequestRetrofitJson.getInstance().getAssetsIdRequest(id);
                 log.info("Done request for get assets by id. Server code respose: " + serverResponse.getCode());
             } catch (Exception e) {
                 log.debug("[ERROR]", e);
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(jsonObject.toString());
             }
-            return ResponseEntity.status(HttpStatus.OK).body(serverResponse.getJsonMessage());
-
+            HttpStatus status = RequestRetrofitJson.getInstance().getResponseCode(serverResponse.getCode());
+            String response = jsonObject.toString();
+            if (HttpStatus.OK.equals(status))
+                response = serverResponse.getJsonMessage();
+            return ResponseEntity.status(status).body(response);
         }
     }
-
 }

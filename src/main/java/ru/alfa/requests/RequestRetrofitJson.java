@@ -19,8 +19,8 @@ import ru.alfa.objects.ServerResponse;
  */
 public class RequestRetrofitJson {
 
-    private static Retrofit mRetrofit;
-    private static RequestRetrofitJson requestRetrofitJson;
+    private Retrofit mRetrofit;
+    private static volatile RequestRetrofitJson requestRetrofitJson;
 
     /*   
       *Конструктор по умолчанию инициализирующий экземпляр Retrofit
@@ -33,9 +33,16 @@ public class RequestRetrofitJson {
     }
 
     public static RequestRetrofitJson getInstance() {
-        if (null == mRetrofit)
-            requestRetrofitJson = new RequestRetrofitJson();
-        return requestRetrofitJson;
+        RequestRetrofitJson localInstance = requestRetrofitJson;
+        if (localInstance == null) {
+            synchronized (RequestRetrofitJson.class) {
+                localInstance = requestRetrofitJson;
+                if (localInstance == null) {
+                    requestRetrofitJson = localInstance = new RequestRetrofitJson();
+                }
+            }
+        }
+        return localInstance;
     }
 
     /*

@@ -15,6 +15,7 @@
         <junit.version>4.11</junit.version>
         <logback.version>1.0.13</logback.version>
         <jcl-over-slf4j.version>1.7.5</jcl-over-slf4j.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
     <dependencies>
@@ -93,8 +94,12 @@
             <artifactId>simple-xml</artifactId>
             <version>2.7.1</version>
         </dependency>
-        
-
+        <!-- https://mvnrepository.com/artifact/com.googlecode.json-simple/json-simple -->
+        <dependency>
+            <groupId>com.googlecode.json-simple</groupId>
+            <artifactId>json-simple</artifactId>
+            <version>1.1.1</version>
+        </dependency>
 
     </dependencies>
 
@@ -110,7 +115,7 @@
                 <configuration>
                     <source>${jdk.version}</source>
                     <target>${jdk.version}</target>
-                    <encoding>${file.encoding}</encoding>
+                    <encoding>${project.build.sourceEncoding}</encoding>
                     <compilerArgument>-Xlint:all</compilerArgument>
                     <showWarnings>true</showWarnings>
                     <showDeprecation>true</showDeprecation>
@@ -123,10 +128,17 @@
                 <artifactId>tomcat7-maven-plugin</artifactId>
                 <version>2.2</version>
                 <configuration>
-                    <path>/webservice</path>
+                    <path>/alfaback</path>
                 </configuration>
             </plugin>
-
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>2.4.3</version>
+                <configuration>
+                    <encoding>${project.build.sourceEncoding}</encoding>
+                </configuration>
+            </plugin>
         </plugins>
     </build>
 </project>

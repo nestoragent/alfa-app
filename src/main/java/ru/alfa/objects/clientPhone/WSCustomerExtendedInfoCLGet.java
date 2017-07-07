@@ -1,26 +1,24 @@
 package ru.alfa.objects.clientPhone;
 
-import java.util.List;
+import ru.alfa.objects.InCommonParms;
 import org.simpleframework.xml.Element;
-import org.simpleframework.xml.ElementList;
-import org.simpleframework.xml.Namespace;
-import org.simpleframework.xml.Root;
+import org.simpleframework.xml.Path;
 
-@Root(name = "WSCustomerExtendedInfoCLGet")
-@Namespace(prefix = "wsc")
+
 public class WSCustomerExtendedInfoCLGet {
 
-    @ElementList
-    private InCommonParms inCommonParms;
     @Element
-    private InParams inParams;
+    private InCommonParms inCommonParms;
+    
+    @Path("inParms")
+    @Element
+    private final String cus;
+    
+    public WSCustomerExtendedInfoCLGet(@Element(name = "cus") String cus){
+        this.cus = cus;
+    }
 
     public void setInCommonParms(InCommonParms inCommonParms) {
         this.inCommonParms = inCommonParms;
     }
-
-    public void setInParams(InParams inParams) {
-        this.inParams = inParams;
-    }
-
 }

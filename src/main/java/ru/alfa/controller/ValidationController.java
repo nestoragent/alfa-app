@@ -25,24 +25,30 @@ public class ValidationController {
     @ResponseBody
     String postOrderValidation(
             @RequestParam(value = "pins") String pins,
-            @RequestParam(value = "assetId") Integer assetId,
-            @RequestParam(value = "generalAgreementId") Integer generalAgreementId,
-            @RequestParam(value = "operation") Integer operation,
-            @RequestParam(value = "quantity") Integer quantity,
-            @RequestParam(value = "attachmentName") String attachmentName,
-            @RequestParam(value = "amount") Integer amount) {
-        ServerResponse response;
-        try {
-            response = RequestRetrofitJson.getInstance().postOrderValidation(
-                    OrderValidation.builder().pins(pins).assetId(assetId)
-                            .generalAgreementId(generalAgreementId).operation(operation).quantity(quantity).
-                            attachmentName(attachmentName).amount(amount).build());
-            log.info("Done request for get assets by id. response: " + response.getJsonMessage());
-        } catch (IOException e) {
-            log.debug("[ERROR]", e);
-            return "Error when call postOrderValidation. Message: " + e.getMessage();
-        }
-        return response.getJsonMessage();
+            @RequestParam(value = "assetId") String assetId,
+            @RequestParam(value = "generalAgreementId") String generalAgreementId,
+            @RequestParam(value = "operation") String operation,
+            @RequestParam(value = "amount") String amount,
+            @RequestParam(value = "quantity") String quantity) {
+//        ServerResponse response;
+//        try {
+//            response = RequestRetrofitJson.getInstance().postOrderValidation(
+//                    OrderValidation.builder().pins(pins).assetId(assetId)
+//                            .generalAgreementId(generalAgreementId).operation(operation).quantity(quantity).
+//                            attachmentName(attachmentName).amount(amount).build());
+//            log.info("Done request for get assets by id. response: " + response.getJsonMessage());
+//        } catch (IOException e) {
+//            log.debug("[ERROR]", e);
+//            return "Error when call postOrderValidation. Message: " + e.getMessage();
+//        }
+//        return response.getJsonMessage();
+        System.out.println("pins: " + pins);
+        System.out.println("assetId: " + assetId);
+        System.out.println("generalAgreementId: " + generalAgreementId);
+        System.out.println("operation: " + operation);
+        System.out.println("amount: " + amount);
+        System.out.println("quantity: " + quantity);
+        return "{\"status\":2,\"message\":\"Лимиты рассчитаны\",\"tradeAccount\":\"30601840700009092110\",\"commissionAccount\":\"30601810400009092110\",\"missingForTrade\":0.0000,\"missingForCommission\":0.0000,\"amount\":0.00000000,\"quantity\":0,\"commission\":0.0000,\"generalAgreementId\":92110}";
     }
 
 

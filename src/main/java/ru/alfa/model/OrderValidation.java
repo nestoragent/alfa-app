@@ -6,7 +6,6 @@
 package ru.alfa.model;
 
 import com.google.gson.annotations.SerializedName;
-import lombok.Builder;
 import lombok.Data;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
@@ -16,7 +15,6 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 @Data
-@Builder
 @ToString
 public class OrderValidation {
 

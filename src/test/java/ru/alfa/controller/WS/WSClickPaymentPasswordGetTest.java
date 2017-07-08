@@ -1,11 +1,11 @@
 package ru.alfa.controller.WS;
 
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import org.junit.Assert;
 import org.junit.Test;
-
-import static org.junit.Assert.*;
+import org.springframework.http.ResponseEntity;
 
 /**
  * Created by nestor on 07.07.2017.
@@ -18,13 +18,14 @@ public class WSClickPaymentPasswordGetTest {
         WSClickPaymentPasswordGet wsClickPaymentPasswordGet = new WSClickPaymentPasswordGet();
 
         //act
-        String response = wsClickPaymentPasswordGet.sendSMS("B81206", "SMSPWD");
+        ResponseEntity response = wsClickPaymentPasswordGet.sendSMS("B81206", "SMSPWD");
 
         //assert
-        JSONParser parser = new JSONParser();
-        Object obj = parser.parse(response);
-        JSONObject jsonObject = (JSONObject) obj;
-        Assert.assertNotEquals("", jsonObject.get("ref"));
-        Assert.assertNotNull(jsonObject.get("ref"));
+        JsonElement jElement = new JsonParser().parse(response.getBody().toString());
+        JsonObject jObject = jElement.getAsJsonObject();
+        Assert.assertNotEquals("", response.getStatusCode());
+        Assert.assertNotNull(response.getStatusCode());
+        Assert.assertNotEquals("", jObject.get("ref"));
+        Assert.assertNotNull(jObject.get("ref"));
     }
 }

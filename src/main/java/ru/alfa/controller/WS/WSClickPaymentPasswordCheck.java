@@ -13,9 +13,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import ru.alfa.getters.SendAndValidCode;
 import ru.alfa.objects.OutParms;
 
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-
 /**
  * Created by nestor on 05.07.2017.
  */
@@ -29,7 +26,7 @@ public class WSClickPaymentPasswordCheck {
     @ResponseBody
     ResponseEntity codeValidation(
             @RequestParam(value = "ref", required = true) String ref,
-            @Min(4) @Max(4) @RequestParam(value = "pwd", required = true, defaultValue = "pwd") String pwd) {
+            @RequestParam(value = "pwd", required = true, defaultValue = "pwd") String pwd) {
         if (true) {
             System.out.println("ref: " + ref);
             System.out.println("pwd: " + pwd);

@@ -26,8 +26,7 @@ import java.io.IOException;
 public class OrderController {
 
     @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST})
-    public
-    @ResponseBody
+    public @ResponseBody
     ResponseEntity<String> postOrder(
             @RequestParam(value = "pins") String pins,
             @RequestParam(value = "assetId") String assetId,
@@ -35,7 +34,10 @@ public class OrderController {
             @RequestParam(value = "operation") String operation,
             @RequestParam(value = "quantity") String quantity,
             @RequestParam(value = "amount") String amount,
-            @RequestParam(value = "ref") String ref) {
+            @RequestParam(value = "signCode") String signCode,
+            @RequestParam(value = "phone") String phone,
+            @RequestParam(value = "dateTime") String dateTime,
+            @RequestParam(value = "ref") String reference) {
         if (true) {
             System.out.println("pins: " + pins);
             System.out.println("assetId: " + assetId);
@@ -43,7 +45,10 @@ public class OrderController {
             System.out.println("operation: " + operation);
             System.out.println("amount: " + amount);
             System.out.println("quantity: " + quantity);
-            System.out.println("reference: " + ref);
+            System.out.println("signCode: " + signCode);
+            System.out.println("phone: " + phone);
+            System.out.println("dateTime: " + dateTime);
+            System.out.println("reference: " + reference);
 
             JSONObject obj = new JSONObject();
             obj.put("code", "201");
@@ -57,29 +62,34 @@ public class OrderController {
             Order order = new Order();
             order.setPins(pins);
             try {
+                order.setPins(pins);
                 order.setAssetId(Integer.parseInt(assetId));
                 order.setGeneralAgreementId(Integer.parseInt(generalAgreementId));
                 order.setOperation(Integer.parseInt(operation));
                 order.setQuantity(Integer.parseInt(quantity));
                 order.setAmount(Integer.parseInt(amount));
+                order.setSignCode(Integer.parseInt(signCode));
+                order.setPhone(phone);
+                order.setDateTime(dateTime);
+                order.setReference(reference);
+
+                serverResponse = RequestRetrofitJson.getInstance().postOrder(order);
+                HttpStatus status = RequestRetrofitJson.getInstance().getResponseCode(serverResponse.getCode());
+                String response;
+                if (HttpStatus.OK.equals(status)) {
+                    response = serverResponse.getJsonMessage();
+                } else{
+                    response = jsonObject.toString();
+                }
+                return ResponseEntity.status(status).body(response);
+                
             } catch (NumberFormatException e) {
                 log.info("Error message: " + e.getMessage());
                 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(jsonObject.toString());
-            }
-
-            try {
-                serverResponse = RequestRetrofitJson.getInstance().postOrder(order);
             } catch (IOException e) {
                 log.debug("[ERROR]", e);
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(jsonObject.toString());
             }
-            HttpStatus status = RequestRetrofitJson.getInstance().getResponseCode(serverResponse.getCode());
-            String response = jsonObject.toString();
-            if (HttpStatus.OK.equals(status))
-                response = serverResponse.getJsonMessage();
-            return ResponseEntity.status(status).body(response);
         }
     }
-
-
 }

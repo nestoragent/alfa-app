@@ -28,6 +28,14 @@ public class Order {
     private String attachmentBody;
     @SerializedName("Amount")
     private int amount;
+    @SerializedName ("SignCode")
+    private int signCode;
+    @SerializedName("Phone")
+    private String phone;
+    @SerializedName("DateTime")
+    private String dateTime;
+    @SerializedName("Reference")
+    private String reference;
 
 
 }

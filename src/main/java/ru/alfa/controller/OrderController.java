@@ -1,5 +1,6 @@
 package ru.alfa.controller;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 import lombok.extern.slf4j.Slf4j;
@@ -8,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import ru.alfa.model.Order;
 import ru.alfa.objects.ServerResponse;
@@ -28,26 +28,9 @@ public class OrderController {
 
     @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST})
     public @ResponseBody
-    ResponseEntity<String> postOrder(
-            @RequestParam(value = "pins") String pins,
-            @RequestParam(value = "assetId") String assetId,
-            @RequestParam(value = "generalAgreementId") String generalAgreementId,
-            @RequestParam(value = "operation") String operation,
-            @RequestParam(value = "quantity") String quantity,
-            @RequestParam(value = "amount") String amount,
-            @RequestParam(value = "signCode") String signCode,
-            @RequestParam(value = "phone") String phone,
-            @RequestParam(value = "ref") String reference) {
+    ResponseEntity<String> postOrder(String orderBody) {
         if (true) {
-            System.out.println("pins: " + pins);
-            System.out.println("assetId: " + assetId);
-            System.out.println("generalAgreementId: " + generalAgreementId);
-            System.out.println("operation: " + operation);
-            System.out.println("amount: " + amount);
-            System.out.println("quantity: " + quantity);
-            System.out.println("signCode: " + signCode);
-            System.out.println("phone: " + phone);
-            System.out.println("reference: " + reference);
+            System.out.println("orderBody: " + orderBody);
 
             JsonObject jsonObject = new JsonObject();
             jsonObject.add("serverError", new JsonPrimitive(""));
@@ -56,7 +39,7 @@ public class OrderController {
                     + "  \"Message\": \"покупка прошла успешно\",\n"
                     + "  \"Result\": 0,\n"
                     + "  \"Success\": true\n"
-                    + "}"));            
+                    + "}"));
             return ResponseEntity.status(HttpStatus.OK).body(jsonObject.toString());
         } else {
             String response = "";
@@ -65,17 +48,10 @@ public class OrderController {
             JsonObject jsonObject = new JsonObject();
 
             try {
-                Order order = new Order();
-                order.setPins(pins);
-                order.setPins(pins);
-                order.setAssetId(Integer.parseInt(assetId));
-                order.setGeneralAgreementId(Integer.parseInt(generalAgreementId));
-                order.setOperation(Integer.parseInt(operation));
-                order.setQuantity(Integer.parseInt(quantity));
-                order.setAmount(Integer.parseInt(amount));
-                order.setSignCode(Integer.parseInt(signCode));
-                order.setPhone(phone);
-                order.setReference(reference);
+                Gson gson = new Gson();
+                Order order = gson.fromJson(orderBody, Order.class);
+                order.setAttachmentName("");
+                order.setAttachmentBody("");
 
                 Calendar calendar = Calendar.getInstance();
                 calendar.setTimeInMillis(System.currentTimeMillis());
@@ -90,6 +66,9 @@ public class OrderController {
 
             } catch (NumberFormatException e) {
                 log.info("Error message: " + e.getMessage());
+                serverError = e.getMessage();
+                status = 400;
+            } catch (NullPointerException e) {
                 serverError = e.getMessage();
                 status = 400;
             } catch (IOException e) {

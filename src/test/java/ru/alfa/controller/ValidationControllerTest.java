@@ -18,7 +18,16 @@ public class ValidationControllerTest {
         ValidationController validationController = new ValidationController();
 
         //act
-        ResponseEntity response = validationController.postOrderValidation("1", "2", "3", "5", "6", "7");
+        ResponseEntity response = validationController.postOrderValidation("{\n"
+                + "  \"Pins\": \"string\",\n"
+                + "  \"AssetId\": 0,\n"
+                + "  \"GeneralAgreementId\": 0,\n"
+                + "  \"Operation\": 0,\n"
+                + "  \"Quantity\": 0,\n"
+                + "  \"AttachmentName\": \"string\",\n"
+                + "  \"AttachmentBody\": \"string\",\n"
+                + "  \"Amount\": 0\n"
+                + "}");
 
         //assert
         JsonElement jElement = new JsonParser().parse(response.getBody().toString());

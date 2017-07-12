@@ -36,6 +36,4 @@ public class Order {
     private String dateTime;
     @SerializedName("Reference")
     private String reference;
-
-
 }

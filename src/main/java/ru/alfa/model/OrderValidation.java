@@ -33,6 +33,5 @@ public class OrderValidation {
     @SerializedName("AttachmentBody")
     private String attachmentBody;
     @SerializedName("Amount")
-    private int amount;
-
+    private int amount;   
 }

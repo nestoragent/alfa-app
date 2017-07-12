@@ -136,7 +136,6 @@ public class RequestRetrofitJson {
                 break;
             default:
                 status = HttpStatus.OK;
-
         }
         return status;
     }

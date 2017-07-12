@@ -25,8 +25,7 @@ import java.io.IOException;
 public class ValidationController {
 
     @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST})
-    public
-    @ResponseBody
+    public @ResponseBody
     ResponseEntity postOrderValidation(
             @RequestParam(value = "pins") String pins,
             @RequestParam(value = "assetId") String assetId,
@@ -41,36 +40,43 @@ public class ValidationController {
             System.out.println("operation: " + operation);
             System.out.println("amount: " + amount);
             System.out.println("quantity: " + quantity);
-            return ResponseEntity.status(HttpStatus.OK).body("{\"status\":2,\"message\":\"Лимиты рассчитаны\",\"tradeAccount\":\"30601840700009092110\",\"commissionAccount\":\"30601810400009092110\",\"missingForTrade\":0.0000,\"missingForCommission\":0.0000,\"amount\":0.00000000,\"quantity\":0,\"commission\":0.0000,\"generalAgreementId\":92110}");
-        } else {
-            ServerResponse serverResponse;
+            
             JsonObject jsonObject = new JsonObject();
-            jsonObject.add("status", new JsonPrimitive("Извините, что-то пошло не так, попробуйте позднее"));
+            jsonObject.add("serverError", new JsonPrimitive(""));
+            jsonObject.add("alfaResponse", new JsonPrimitive("{\"status\":2,\"message\":\"Лимиты рассчитаны\",\"tradeAccount\":\"30601840700009092110\",\"commissionAccount\":\"30601810400009092110\",\"missingForTrade\":0.0000,\"missingForCommission\":0.0000,\"amount\":0.00000000,\"quantity\":0,\"commission\":0.0000,\"generalAgreementId\":92110}"));
+            return ResponseEntity.status(HttpStatus.OK).body(jsonObject.toString());
+        } else {
+            String response = "";
+            String serverError = "";
+            int status;
+            JsonObject jsonObject = new JsonObject();
 
-            OrderValidation orderValidation = new OrderValidation();
-            orderValidation.setPins(pins);
             try {
+                OrderValidation orderValidation = new OrderValidation();
+                orderValidation.setPins(pins);
                 orderValidation.setAssetId(Integer.parseInt(assetId));
                 orderValidation.setGeneralAgreementId(Integer.parseInt(generalAgreementId));
                 orderValidation.setOperation(Integer.parseInt(operation));
                 orderValidation.setAmount(Integer.parseInt(amount));
                 orderValidation.setQuantity(Integer.parseInt(quantity));
+
+                ServerResponse serverResponse = RequestRetrofitJson.getInstance().postOrderValidation(orderValidation);
+                status = serverResponse.getCode();
+                response = serverResponse.getJsonMessage();
+
             } catch (NumberFormatException e) {
                 log.info("Error message: " + e.getMessage());
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(jsonObject.toString());
-            }
-
-            try {
-                serverResponse = RequestRetrofitJson.getInstance().postOrderValidation(orderValidation);
+                serverError = e.getMessage();
+                status = 400;
             } catch (IOException e) {
                 log.debug("[ERROR]", e);
-                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(jsonObject.toString());
+                serverError = e.getMessage();
+                status = 503;
             }
-            HttpStatus status = RequestRetrofitJson.getInstance().getResponseCode(serverResponse.getCode());
-            String response = jsonObject.toString();
-            if (HttpStatus.OK.equals(status))
-                response = serverResponse.getJsonMessage();
-            return ResponseEntity.status(status).body(response);
+            
+            jsonObject.add("serverError", new JsonPrimitive(serverError));
+            jsonObject.add("alfaResponse", new JsonPrimitive(response));
+            return ResponseEntity.status(status).body(jsonObject.toString());
         }
     }
 }

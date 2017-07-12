@@ -3,7 +3,6 @@ package ru.alfa.controller;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 import lombok.extern.slf4j.Slf4j;
-import org.json.simple.JSONObject;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -16,6 +15,8 @@ import ru.alfa.objects.ServerResponse;
 import ru.alfa.requests.RequestRetrofitJson;
 
 import java.io.IOException;
+import java.util.Calendar;
+import ru.alfa.tools.StringFormatter;
 
 /**
  * Created by nestor on 04.07.2017.
@@ -36,7 +37,6 @@ public class OrderController {
             @RequestParam(value = "amount") String amount,
             @RequestParam(value = "signCode") String signCode,
             @RequestParam(value = "phone") String phone,
-            @RequestParam(value = "dateTime") String dateTime,
             @RequestParam(value = "ref") String reference) {
         if (true) {
             System.out.println("pins: " + pins);
@@ -47,21 +47,26 @@ public class OrderController {
             System.out.println("quantity: " + quantity);
             System.out.println("signCode: " + signCode);
             System.out.println("phone: " + phone);
-            System.out.println("dateTime: " + dateTime);
             System.out.println("reference: " + reference);
 
-            JSONObject obj = new JSONObject();
-            obj.put("code", "201");
-            obj.put("Description", "покупка прошла успешно");
-            return ResponseEntity.status(HttpStatus.OK).body(obj.toString());
-        } else {
-            ServerResponse serverResponse;
             JsonObject jsonObject = new JsonObject();
-            jsonObject.add("status", new JsonPrimitive("Извините, что-то пошло не так, попробуйте позднее"));
+            jsonObject.add("serverError", new JsonPrimitive(""));
+            jsonObject.add("alfaResponse", new JsonPrimitive("{\n"
+                    + "  \"Error\": 0,\n"
+                    + "  \"Message\": \"покупка прошла успешно\",\n"
+                    + "  \"Result\": 0,\n"
+                    + "  \"Success\": true\n"
+                    + "}"));            
+            return ResponseEntity.status(HttpStatus.OK).body(jsonObject.toString());
+        } else {
+            String response = "";
+            String serverError = "";
+            int status;
+            JsonObject jsonObject = new JsonObject();
 
-            Order order = new Order();
-            order.setPins(pins);
             try {
+                Order order = new Order();
+                order.setPins(pins);
                 order.setPins(pins);
                 order.setAssetId(Integer.parseInt(assetId));
                 order.setGeneralAgreementId(Integer.parseInt(generalAgreementId));
@@ -70,26 +75,31 @@ public class OrderController {
                 order.setAmount(Integer.parseInt(amount));
                 order.setSignCode(Integer.parseInt(signCode));
                 order.setPhone(phone);
-                order.setDateTime(dateTime);
                 order.setReference(reference);
 
-                serverResponse = RequestRetrofitJson.getInstance().postOrder(order);
-                HttpStatus status = RequestRetrofitJson.getInstance().getResponseCode(serverResponse.getCode());
-                String response;
-                if (HttpStatus.OK.equals(status)) {
-                    response = serverResponse.getJsonMessage();
-                } else{
-                    response = jsonObject.toString();
-                }
-                return ResponseEntity.status(status).body(response);
-                
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTimeInMillis(System.currentTimeMillis());
+                StringFormatter formatter = new StringFormatter();
+                order.setDateTime(formatter.dateFormat(calendar.get(Calendar.DAY_OF_MONTH),
+                        calendar.get(Calendar.MONTH), calendar.get(Calendar.YEAR))
+                        + " " + formatter.timeFormat(calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE)));
+
+                ServerResponse serverResponse = RequestRetrofitJson.getInstance().postOrder(order);
+                status = serverResponse.getCode();
+                response = serverResponse.getJsonMessage();
+
             } catch (NumberFormatException e) {
                 log.info("Error message: " + e.getMessage());
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(jsonObject.toString());
+                serverError = e.getMessage();
+                status = 400;
             } catch (IOException e) {
                 log.debug("[ERROR]", e);
-                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(jsonObject.toString());
+                serverError = e.getMessage();
+                status = 503;
             }
+            jsonObject.add("serverError", new JsonPrimitive(serverError));
+            jsonObject.add("alfaResponse", new JsonPrimitive(response));
+            return ResponseEntity.status(status).body(jsonObject.toString());
         }
     }
 }

@@ -26,7 +26,9 @@ public class AssetsController {
     @ResponseBody
     ResponseEntity postAssetsById(@RequestParam String id) {
         if (true) {
-            return ResponseEntity.status(HttpStatus.OK).body("{\n" +
+            JsonObject jsonObject = new JsonObject();       
+            jsonObject.add("serverError", new JsonPrimitive(""));
+            jsonObject.add("alfaResponse", new JsonPrimitive("{\n" +
                     "    \"aci\": 11.69,\n" +
                     "    \"aciTotal\": 0,\n" +
                     "    \"activity\": 1,\n" +
@@ -56,23 +58,28 @@ public class AssetsController {
                     "    \"holdingTotalDays\": 0,\n" +
                     "    \"qualifiedOnly\": true,\n" +
                     "    \"currentValue\": null\n" +
-                    "}\n");
+                    "}\n"));
+            return ResponseEntity.status(HttpStatus.OK).body(jsonObject.toString());
         } else {
-            JsonObject jsonObject = new JsonObject();
-            jsonObject.add("status", new JsonPrimitive("Извините, что-то пошло не так, попробуйте позднее"));
-            ServerResponse serverResponse;
+            String response = "";
+            String serverError = "";
+            int status;
+            JsonObject jsonObject = new JsonObject();            
+                        
             try {
-                serverResponse = RequestRetrofitJson.getInstance().getAssetsIdRequest(id);
+                ServerResponse serverResponse = RequestRetrofitJson.getInstance().getAssetsIdRequest(id);
+                status = serverResponse.getCode();
+                response = serverResponse.getJsonMessage();
+                
                 log.info("Done request for get assets by id. Server code respose: " + serverResponse.getCode());
             } catch (Exception e) {
                 log.debug("[ERROR]", e);
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(jsonObject.toString());
+                serverError = e.getMessage();
+                status = 400;               
             }
-            HttpStatus status = RequestRetrofitJson.getInstance().getResponseCode(serverResponse.getCode());
-            String response = jsonObject.toString();
-            if (HttpStatus.OK.equals(status))
-                response = serverResponse.getJsonMessage();
-            return ResponseEntity.status(status).body(response);
+            jsonObject.add("serverError", new JsonPrimitive(serverError));
+            jsonObject.add("alfaResponse", new JsonPrimitive(response));
+            return ResponseEntity.status(status).body(jsonObject.toString());
         }
     }
 }

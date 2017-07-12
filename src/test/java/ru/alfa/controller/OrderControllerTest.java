@@ -23,7 +23,7 @@ public class OrderControllerTest {
         OrderController orderController = new OrderController();
 
         //act
-        ResponseEntity response = orderController.postOrder("1", "2", "3", "4", "5", "6", "7", "8", "9", "10");
+        ResponseEntity response = orderController.postOrder("1", "2", "3", "4", "5", "6", "7", "8", "9");
 
         //assert        
         JsonElement jElement = new JsonParser().parse(response.getBody().toString());

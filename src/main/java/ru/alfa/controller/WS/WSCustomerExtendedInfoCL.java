@@ -31,18 +31,16 @@ public class WSCustomerExtendedInfoCL {
             JsonObject jsonResponse = new JsonObject();
             jsonResponse.add("adt", new JsonPrimitive("79852222556"));            
             jsonObject.add("serverError", new JsonPrimitive(""));
-            jsonObject.add("alfaResponse", jsonResponse);
-            jsonObject.add("ref", new JsonPrimitive("PC30407170008szz"));
+            jsonObject.add("alfaResponse", jsonResponse);           
             return ResponseEntity.status(HttpStatus.OK).body(jsonObject.toString());
         } else {   
-             String serverError = "";
+            String serverError = "";
             HttpStatus status = HttpStatus.OK;
             JsonObject jsonObject = new JsonObject();
             JsonObject jsonResponse = new JsonObject();
             try {
                 String phone = new GetterClientPhone(cus).getPhone();                
-                jsonObject.add("adt", new JsonPrimitive(phone));
-                ResponseEntity.status(HttpStatus.OK).body(jsonObject.toString());
+                jsonResponse.add("adt", new JsonPrimitive("79852222556"));                
             } catch (Exception ex) {
                 Logger.getLogger(WSCustomerExtendedInfoCL.class.getName()).log(Level.WARNING, null, ex);
                 status = HttpStatus.BAD_REQUEST;

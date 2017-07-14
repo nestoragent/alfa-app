@@ -22,25 +22,31 @@ import ru.alfa.objects.OutParms;
 public class WSClickPaymentPasswordCheck {
 
     @RequestMapping(method = {RequestMethod.GET, RequestMethod.POST})
-    public
-    @ResponseBody
+    public @ResponseBody
     ResponseEntity codeValidation(
             @RequestParam(value = "ref", required = true) String ref,
             @RequestParam(value = "pwd", required = true, defaultValue = "pwd") String pwd) {
         if (true) {
             System.out.println("ref: " + ref);
             System.out.println("pwd: " + pwd);
-            JsonObject obj = new JsonObject();
-            obj.add("status", new JsonPrimitive("success"));
-            return ResponseEntity.status(HttpStatus.OK).body(obj.toString());
+            JsonObject jsonObject = new JsonObject();
+            JsonObject jsonResponse = new JsonObject();
+            jsonResponse.add("status", new JsonPrimitive("success"));
+            jsonResponse.add("actionId", new JsonPrimitive(""));
+            jsonObject.add("serverError", new JsonPrimitive(""));
+            jsonObject.add("alfaResponse", jsonResponse);
+            return ResponseEntity.status(HttpStatus.OK).body(jsonObject.toString());
         } else {
+            String serverError = "";
+            HttpStatus status = HttpStatus.OK;
+            JsonObject jsonObject = new JsonObject();
+            JsonObject jsonResponse = new JsonObject();
             try {
                 OutParms params = new SendAndValidCode(ref, pwd).sendSMS();
-                JsonObject jsonObject = new JsonObject();
                 String actionId = params.getActionId().trim();
                 if ("".equals(actionId)) {
-                    jsonObject.add("status", new JsonPrimitive("success"));
-                    return ResponseEntity.status(HttpStatus.OK).body(jsonObject.toString());
+                    jsonResponse.add("status", new JsonPrimitive("success"));
+                    jsonResponse.add("actionId", new JsonPrimitive(""));
                 } else {
                     StringBuilder message = new StringBuilder();
                     message.append("Error code: " + actionId);
@@ -64,13 +70,18 @@ public class WSClickPaymentPasswordCheck {
                             message.append("Проверка пароля не доступна");
                             break;
                     }
-                    jsonObject.add("status", new JsonPrimitive(message.toString()));
-                    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(jsonObject.toString());
+                    jsonResponse.add("status", new JsonPrimitive("fail"));
+                    jsonResponse.add("actionId", new JsonPrimitive(message.toString()));
+                    status = HttpStatus.INTERNAL_SERVER_ERROR;
                 }
             } catch (Exception ex) {
                 log.debug("Method sendSMS.", ex);
+                status = HttpStatus.BAD_REQUEST;
+                serverError = ex.getMessage();
             }
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+            jsonObject.add("serverError", new JsonPrimitive(serverError));
+            jsonObject.add("alfaResponse", jsonResponse);
+            return ResponseEntity.status(status).body(jsonObject.toString());
         }
     }
 }

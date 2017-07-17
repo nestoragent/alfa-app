@@ -5,7 +5,6 @@ import com.google.gson.JsonPrimitive;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import lombok.extern.slf4j.Slf4j;
-import org.json.simple.JSONObject;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -27,20 +26,29 @@ public class WSCustomerExtendedInfoCL {
     public @ResponseBody
     ResponseEntity getTelephoneNumber(@RequestParam String cus) {
         if (true) {
-            System.out.println("cus: " + cus);
-            JSONObject obj = new JSONObject();
-            obj.put("adt", "79852222556");
-            return ResponseEntity.status(HttpStatus.OK).body(obj.toString());
-        } else {             
+            System.out.println("cus: " + cus);           
+            JsonObject jsonObject = new JsonObject();
+            JsonObject jsonResponse = new JsonObject();
+            jsonResponse.add("adt", new JsonPrimitive("79852222556"));            
+            jsonObject.add("serverError", new JsonPrimitive(""));
+            jsonObject.add("alfaResponse", jsonResponse);           
+            return ResponseEntity.status(HttpStatus.OK).body(jsonObject.toString());
+        } else {   
+            String serverError = "";
+            HttpStatus status = HttpStatus.OK;
+            JsonObject jsonObject = new JsonObject();
+            JsonObject jsonResponse = new JsonObject();
             try {
-                String phone = new GetterClientPhone(cus).getPhone();
-                JsonObject jsonObject = new JsonObject();
-                jsonObject.add("adt", new JsonPrimitive(phone));
-                ResponseEntity.status(HttpStatus.OK).body(jsonObject.toString());
+                String phone = new GetterClientPhone(cus).getPhone();                
+                jsonResponse.add("adt", new JsonPrimitive("79852222556"));                
             } catch (Exception ex) {
                 Logger.getLogger(WSCustomerExtendedInfoCL.class.getName()).log(Level.WARNING, null, ex);
+                status = HttpStatus.BAD_REQUEST;
+                serverError = ex.getMessage();
             }
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+            jsonObject.add("serverError", new JsonPrimitive(serverError));
+            jsonObject.add("alfaResponse", jsonResponse);
+            return ResponseEntity.status(status).body(jsonObject.toString());
         }
     }
 }
